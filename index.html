@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House of Heritage | St. Vincent & the Grenadines</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        heritage: {
+                            cream: '#FAF6EF',
+                            creamDark: '#F3ECE0',
+                            gold: '#C5A059',
+                            goldDark: '#A37F38',
+                            green: '#2A4032',
+                            greenLight: '#3D5A47',
+                            earth: '#4A3B32',
+                            charcoal: '#1A1D1A',
+                            sand: '#E8DFD1'
+                        }
+                    },
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        playfair: ['Playfair Display', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #FAF6EF;
+            color: #1A1D1A;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .font-cinzel { font-family: 'Cinzel', serif; }
+        .font-playfair { font-family: 'Playfair Display', serif; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF6EF;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #C5A059;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #A37F38;
+        }
+
+        /* Subtle Pattern overlay */
+        .bg-pattern {
+            background-image: radial-gradient(#C5A059 0.75px, transparent 0.75px);
+            background-size: 24px 24px;
+            opacity: 0.15;
+        }
+
+        /* Smooth glassmorphism */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(197, 160, 89, 0.25);
+        }
+
+        .toast {
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen flex flex-col justify-between overflow-x-hidden selection:bg-heritage-gold selection:text-white">
+
+    <!-- Subtle Background Texture Pattern -->
+    <div class="fixed inset-0 bg-pattern pointer-events-none z-0"></div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast fixed bottom-6 right-6 z-50 bg-heritage-green text-heritage-cream px-6 py-3 rounded-xl shadow-2xl flex items-center gap-3 border border-heritage-gold/40">
+        <i class="fa-solid fa-circle-check text-heritage-gold text-lg"></i>
+        <span id="toast-message" class="text-sm font-medium">Link copied to clipboard!</span>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-40 bg-heritage-cream/90 backdrop-blur-md border-b border-heritage-gold/20 transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-full border border-heritage-gold flex items-center justify-center bg-heritage-green text-heritage-cream font-cinzel font-bold text-lg shadow-sm group-hover:scale-105 transition-transform">
+                    HH
+                </div>
+                <div>
+                    <span class="font-cinzel font-bold text-lg text-heritage-green tracking-wider block leading-tight">HOUSE OF HERITAGE</span>
+                    <span class="text-[10px] tracking-widest text-heritage-gold uppercase font-semibold">SVG Preservation</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-heritage-earth">
+                <a href="#about" class="hover:text-heritage-gold transition-colors">About Agency</a>
+                <a href="#links" class="hover:text-heritage-gold transition-colors">Social Hub</a>
+                <a href="#gallery" class="hover:text-heritage-gold transition-colors">Cultural Archives</a>
+                <a href="#newsletter" class="hover:text-heritage-gold transition-colors">Stay Connected</a>
+            </nav>
+
+            <!-- Quick Action Button -->
+            <div class="hidden md:flex items-center gap-3">
+                <button onclick="copyHandle('@houseofheritage784')" class="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-heritage-green border border-heritage-green/30 rounded-full hover:bg-heritage-green hover:text-heritage-cream transition-all duration-300 flex items-center gap-2">
+                    <i class="fa-solid fa-copy"></i>
+                    <span>@houseofheritage784</span>
+                </button>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-heritage-green p-2 focus:outline-none" aria-label="Toggle Navigation">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden border-b border-heritage-gold/20 bg-heritage-cream px-4 pt-2 pb-6 space-y-3">
+            <a href="#about" class="block py-2 text-heritage-earth hover:text-heritage-gold font-medium">About Agency</a>
+            <a href="#links" class="block py-2 text-heritage-earth hover:text-heritage-gold font-medium">Social Hub</a>
+            <a href="#gallery" class="block py-2 text-heritage-earth hover:text-heritage-gold font-medium">Cultural Archives</a>
+            <a href="#newsletter" class="block py-2 text-heritage-earth hover:text-heritage-gold font-medium">Stay Connected</a>
+            <button onclick="copyHandle('@houseofheritage784')" class="w-full mt-2 py-2 text-xs font-semibold uppercase tracking-wider text-heritage-green border border-heritage-green/30 rounded-full hover:bg-heritage-green hover:text-heritage-cream transition-all flex items-center justify-center gap-2">
+                <i class="fa-solid fa-copy"></i>
+                <span>Copy Handle (@houseofheritage784)</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="relative z-10 flex-grow">
+
+        <!-- Hero Section -->
+        <section id="about" class="pt-12 pb-16 md:pt-20 md:pb-24 max-w-5xl mx-auto px-4 text-center">
+            
+            <!-- Emblem / Logo Graphic Box -->
+            <div class="relative w-40 h-40 sm:w-48 sm:h-48 mx-auto mb-8 group">
+                <div class="absolute inset-0 rounded-full bg-heritage-gold/20 blur-xl group-hover:bg-heritage-gold/30 transition-all duration-500"></div>
+                <div class="relative w-full h-full rounded-full border-2 border-heritage-gold/60 p-2 bg-heritage-cream shadow-xl flex items-center justify-center">
+                    <div class="w-full h-full rounded-full border border-heritage-green/20 flex flex-col items-center justify-center p-4 bg-gradient-to-b from-heritage-cream to-heritage-creamDark text-heritage-green">
+                        <!-- Custom SVG Pillar & Botanical Wisteria Icon Emblem -->
+                        <svg class="w-16 h-16 text-heritage-green mb-1" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
+                            <!-- Botanical Wisteria top arches -->
+                            <path d="M 30 25 C 40 15, 60 15, 70 25" stroke-linecap="round" />
+                            <path d="M 25 32 C 35 22, 65 22, 75 32" stroke-linecap="round" stroke-dasharray="2 2" />
+                            <path d="M 50 15 L 50 35" stroke-linecap="round" />
+                            <circle cx="50" cy="20" r="2" fill="currentColor" />
+                            <circle cx="42" cy="25" r="2.5" fill="currentColor" />
+                            <circle cx="58" cy="25" r="2.5" fill="currentColor" />
+                            <circle cx="36" cy="30" r="2" fill="currentColor" />
+                            <circle cx="64" cy="30" r="2" fill="currentColor" />
+                            <!-- Greek/Heritage Pillars -->
+                            <rect x="25" y="38" width="50" height="5" rx="1" fill="#C5A059" stroke="none" />
+                            <line x1="32" y1="43" x2="32" y2="72" stroke-width="3" />
+                            <line x1="44" y1="43" x2="44" y2="72" stroke-width="3" />
+                            <line x1="56" y1="43" x2="56" y2="72" stroke-width="3" />
+                            <line x1="68" y1="43" x2="68" y2="72" stroke-width="3" />
+                            <rect x="22" y="72" width="56" height="6" rx="1" fill="#C5A059" stroke="none" />
+                        </svg>
+                        <span class="font-cinzel text-xs font-bold tracking-widest text-heritage-green uppercase">Preservation</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Title & Badges -->
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-heritage-gold/15 border border-heritage-gold/30 text-heritage-goldDark text-xs font-semibold uppercase tracking-widest mb-4">
+                <i class="fa-solid fa-landmark text-[10px]"></i>
+                <span>St. Vincent & the Grenadines</span>
+            </div>
+
+            <h1 class="font-cinzel font-bold text-3xl sm:text-5xl md:text-6xl text-heritage-green tracking-tight mb-4">
+                HOUSE OF HERITAGE
+            </h1>
+
+            <p class="font-playfair italic text-xl sm:text-2xl text-heritage-goldDark mb-6 max-w-2xl mx-auto">
+                "Preserving our past, inspiring our future."
+            </p>
+
+            <p class="text-base sm:text-lg text-heritage-earth max-w-2xl mx-auto leading-relaxed mb-8 font-light">
+                Dedicated to documenting, protecting, and celebrating the rich cultural tapestry, historic landmarks, and vibrant traditions of <strong>St. Vincent & the Grenadines (SVG)</strong> for generations to come.
+            </p>
+
+            <!-- Social Action Bar -->
+            <div class="flex flex-wrap items-center justify-center gap-4">
+                <a href="#links" class="px-7 py-3.5 bg-heritage-green text-heritage-cream font-medium rounded-xl shadow-lg hover:bg-heritage-greenLight hover:shadow-xl transition-all duration-300 flex items-center gap-3">
+                    <i class="fa-solid fa-compass text-heritage-gold"></i>
+                    <span>Explore Social Hub</span>
+                </a>
+                <button onclick="shareAgency()" class="px-6 py-3.5 bg-heritage-creamDark text-heritage-green font-medium rounded-xl border border-heritage-gold/30 hover:bg-heritage-sand transition-all duration-300 flex items-center gap-2">
+                    <i class="fa-solid fa-share-nodes"></i>
+                    <span>Share Agency</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Main Social Hub / Link-in-Bio Section -->
+        <section id="links" class="py-12 bg-heritage-creamDark/60 border-y border-heritage-gold/20">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6">
+                
+                <div class="text-center mb-10">
+                    <h2 class="font-cinzel font-bold text-2xl sm:text-3xl text-heritage-green mb-2">Connect With Us</h2>
+                    <p class="text-xs uppercase tracking-widest text-heritage-gold font-semibold">Official Channels & Media Presence</p>
+                </div>
+
+                <!-- Link Hub Cards List -->
+                <div class="space-y-4 max-w-2xl mx-auto">
+
+                    <!-- Instagram Link -->
+                    <a href="https://instagram.com" target="_blank" rel="noopener font-medium" class="group glass-card p-4 sm:p-5 rounded-2xl flex items-center justify-between hover:border-heritage-gold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 text-white flex items-center justify-center text-2xl shadow-md group-hover:scale-110 transition-transform">
+                                <i class="fa-brands fa-instagram"></i>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <h3 class="font-cinzel font-bold text-heritage-green text-base sm:text-lg">Instagram</h3>
+                                    <span class="bg-heritage-gold/20 text-heritage-goldDark text-[10px] font-bold px-2 py-0.5 rounded-full">Primary</span>
+                                </div>
+                                <p class="text-xs text-heritage-earth/80">@houseofheritage784 • Daily heritage stories & posts</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-arrow-right text-heritage-gold group-hover:translate-x-1 transition-transform p-2"></i>
+                    </a>
+
+                    <!-- YouTube Channel Link -->
+                    <a href="https://youtube.com" target="_blank" rel="noopener font-medium" class="group glass-card p-4 sm:p-5 rounded-2xl flex items-center justify-between hover:border-heritage-gold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-red-600 text-white flex items-center justify-center text-2xl shadow-md group-hover:scale-110 transition-transform">
+                                <i class="fa-brands fa-youtube"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-cinzel font-bold text-heritage-green text-base sm:text-lg">YouTube Documentaries</h3>
+                                <p class="text-xs text-heritage-earth/80">Mini-docs & oral history interviews</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-arrow-right text-heritage-gold group-hover:translate-x-1 transition-transform p-2"></i>
+                    </a>
+
+                    <!-- Facebook Page Link -->
+                    <a href="https://facebook.com" target="_blank" rel="noopener font-medium" class="group glass-card p-4 sm:p-5 rounded-2xl flex items-center justify-between hover:border-heritage-gold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-blue-700 text-white flex items-center justify-center text-2xl shadow-md group-hover:scale-110 transition-transform">
+                                <i class="fa-brands fa-facebook-f"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-cinzel font-bold text-heritage-green text-base sm:text-lg">Facebook Community</h3>
+                                <p class="text-xs text-heritage-earth/80">Community archive discussions & events</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-arrow-right text-heritage-gold group-hover:translate-x-1 transition-transform p-2"></i>
+                    </a>
+
+                    <!-- TikTok Link -->
+                    <a href="https://tiktok.com" target="_blank" rel="noopener font-medium" class="group glass-card p-4 sm:p-5 rounded-2xl flex items-center justify-between hover:border-heritage-gold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-heritage-charcoal text-white flex items-center justify-center text-2xl shadow-md group-hover:scale-110 transition-transform">
+                                <i class="fa-brands fa-tiktok"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-cinzel font-bold text-heritage-green text-base sm:text-lg">TikTok</h3>
+                                <p class="text-xs text-heritage-earth/80">Bite-sized SVG historical facts & culture</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-arrow-right text-heritage-gold group-hover:translate-x-1 transition-transform p-2"></i>
+                    </a>
+
+                    <!-- Direct Contact Link -->
+                    <a href="mailto:contact@houseofheritage.svg" class="group glass-card p-4 sm:p-5 rounded-2xl flex items-center justify-between hover:border-heritage-gold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-heritage-green text-heritage-gold flex items-center justify-center text-2xl shadow-md group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-cinzel font-bold text-heritage-green text-base sm:text-lg">Agency Inquiries</h3>
+                                <p class="text-xs text-heritage-earth/80">Collaborations, archives & consultations</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-arrow-right text-heritage-gold group-hover:translate-x-1 transition-transform p-2"></i>
+                    </a>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Cultural Archive Grid / Featured Feed -->
+        <section id="gallery" class="py-16 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+                <div>
+                    <span class="text-xs uppercase tracking-widest text-heritage-gold font-bold block mb-1">Preservation Highlights</span>
+                    <h2 class="font-cinzel font-bold text-3xl text-heritage-green">Vincentian Cultural Showcase</h2>
+                </div>
+
+                <!-- Category Filters -->
+                <div class="flex flex-wrap gap-2" id="filter-buttons">
+                    <button onclick="filterPosts('all')" class="filter-btn active px-4 py-1.5 rounded-full text-xs font-semibold border border-heritage-gold bg-heritage-green text-heritage-cream transition-all">All</button>
+                    <button onclick="filterPosts('landmarks')" class="filter-btn px-4 py-1.5 rounded-full text-xs font-semibold border border-heritage-gold/30 bg-heritage-cream text-heritage-earth hover:border-heritage-gold transition-all">Landmarks</button>
+                    <button onclick="filterPosts('traditions')" class="filter-btn px-4 py-1.5 rounded-full text-xs font-semibold border border-heritage-gold/30 bg-heritage-cream text-heritage-earth hover:border-heritage-gold transition-all">Traditions</button>
+                    <button onclick="filterPosts('archives')" class="filter-btn px-4 py-1.5 rounded-full text-xs font-semibold border border-heritage-gold/30 bg-heritage-cream text-heritage-earth hover:border-heritage-gold transition-all">Archives</button>
+                </div>
+            </div>
+
+            <!-- Grid Container -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="archive-grid">
+
+                <!-- Card 1 -->
+                <div class="post-card archives bg-white rounded-2xl overflow-hidden shadow-md border border-heritage-gold/20 hover:shadow-xl transition-all duration-300 flex flex-col">
+                    <div class="relative h-48 bg-heritage-earth/10 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=800&q=80" 
+                             alt="Botanical & Heritage Site" 
+                             class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
+                             onerror="this.src='https://placehold.co/600x400/2A4032/FAF6EF?text=St.+Vincent+Heritage'">
+                        <div class="absolute top-3 left-3 bg-heritage-green/80 backdrop-blur-md text-heritage-cream text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">
+                            Archives
+                        </div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <div class="text-xs text-heritage-gold font-semibold mb-1">Kingstown • St. Vincent</div>
+                            <h3 class="font-cinzel font-bold text-lg text-heritage-green mb-2">The Historic Botanical Gardens</h3>
+                            <p class="text-xs text-heritage-earth/80 leading-relaxed line-clamp-3 mb-4">
+                                Established in 1765, these gardens are among the oldest in the Western Hemisphere, preserving rare flora including the breadfruit tree off-shoot.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-heritage-gold/10 flex items-center justify-between text-xs text-heritage-earth/70">
+                            <span><i class="fa-regular fa-heart text-rose-600 mr-1"></i> 248 Likes</span>
+                            <a href="https://instagram.com" target="_blank" class="hover:text-heritage-gold font-semibold">View Post <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="post-card landmarks bg-white rounded-2xl overflow-hidden shadow-md border border-heritage-gold/20 hover:shadow-xl transition-all duration-300 flex flex-col">
+                    <div class="relative h-48 bg-heritage-earth/10 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=800&q=80" 
+                             alt="Fort Charlotte SVG" 
+                             class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
+                             onerror="this.src='https://placehold.co/600x400/C5A059/FAF6EF?text=Fort+Charlotte'">
+                        <div class="absolute top-3 left-3 bg-heritage-goldDark/90 backdrop-blur-md text-heritage-cream text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">
+                            Landmarks
+                        </div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <div class="text-xs text-heritage-gold font-semibold mb-1">Edinboro • St. Vincent</div>
+                            <h3 class="font-cinzel font-bold text-lg text-heritage-green mb-2">Fort Charlotte Architecture</h3>
+                            <p class="text-xs text-heritage-earth/80 leading-relaxed line-clamp-3 mb-4">
+                                Standing 600 feet above the bay, Fort Charlotte has offered protection and historic panoramic vistas over Kingstown since the 1800s.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-heritage-gold/10 flex items-center justify-between text-xs text-heritage-earth/70">
+                            <span><i class="fa-regular fa-heart text-rose-600 mr-1"></i> 392 Likes</span>
+                            <a href="https://instagram.com" target="_blank" class="hover:text-heritage-gold font-semibold">View Post <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="post-card traditions bg-white rounded-2xl overflow-hidden shadow-md border border-heritage-gold/20 hover:shadow-xl transition-all duration-300 flex flex-col">
+                    <div class="relative h-48 bg-heritage-earth/10 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=800&q=80" 
+                             alt="Vincentian Music & Culture" 
+                             class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
+                             onerror="this.src='https://placehold.co/600x400/4A3B32/FAF6EF?text=Vincentian+Culture'">
+                        <div class="absolute top-3 left-3 bg-heritage-green/80 backdrop-blur-md text-heritage-cream text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">
+                            Traditions
+                        </div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <div class="text-xs text-heritage-gold font-semibold mb-1">Culture & Oral History</div>
+                            <h3 class="font-cinzel font-bold text-lg text-heritage-green mb-2">Vincy Mas & Garifuna Heritage</h3>
+                            <p class="text-xs text-heritage-earth/80 leading-relaxed line-clamp-3 mb-4">
+                                Celebrating indigenous Garifuna roots, traditional drumming, and the colorful evolution of carnival heritage across the island chain.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-heritage-gold/10 flex items-center justify-between text-xs text-heritage-earth/70">
+                            <span><i class="fa-regular fa-heart text-rose-600 mr-1"></i> 510 Likes</span>
+                            <a href="https://instagram.com" target="_blank" class="hover:text-heritage-gold font-semibold">View Post <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Newsletter Subscription Box -->
+        <section id="newsletter" class="py-16 bg-heritage-green text-heritage-cream relative overflow-hidden">
+            <!-- Decorative circle overlay -->
+            <div class="absolute -right-16 -bottom-16 w-64 h-64 rounded-full bg-heritage-gold/10 blur-2xl"></div>
+            
+            <div class="max-w-3xl mx-auto px-4 text-center relative z-10">
+                <i class="fa-solid fa-feather-pointed text-heritage-gold text-3xl mb-3"></i>
+                <h2 class="font-cinzel font-bold text-2xl sm:text-4xl mb-3">Join the Heritage Archive</h2>
+                <p class="text-sm sm:text-base text-heritage-cream/80 max-w-xl mx-auto mb-8 font-light">
+                    Receive monthly digests on Vincentian history, upcoming preservation events, and rare architectural spotlights directly to your inbox.
+                </p>
+
+                <form id="newsletter-form" onsubmit="handleSubscribe(event)" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                    <input type="email" 
+                           id="newsletter-email" 
+                           placeholder="Enter your email address..." 
+                           required 
+                           class="px-5 py-3.5 rounded-xl bg-heritage-cream/10 border border-heritage-gold/30 text-heritage-cream placeholder-heritage-cream/50 focus:outline-none focus:ring-2 focus:ring-heritage-gold text-sm flex-grow">
+                    <button type="submit" class="px-7 py-3.5 bg-heritage-gold text-heritage-charcoal font-bold rounded-xl hover:bg-heritage-goldDark hover:text-white transition-colors duration-300 text-sm flex items-center justify-center gap-2">
+                        <span>Subscribe</span>
+                        <i class="fa-solid fa-paper-plane text-xs"></i>
+                    </button>
+                </form>
+                <p class="text-[11px] text-heritage-cream/50 mt-3">We respect your privacy. Unsubscribe at any time.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-heritage-charcoal text-heritage-cream border-t border-heritage-gold/20 py-12 relative z-10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-white/10">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full border border-heritage-gold flex items-center justify-center bg-heritage-green text-heritage-cream font-cinzel font-bold text-sm">
+                        HH
+                    </div>
+                    <span class="font-cinzel font-bold tracking-wider text-base">HOUSE OF HERITAGE</span>
+                </div>
+
+                <!-- Footer Social Icons -->
+                <div class="flex items-center gap-4 text-heritage-gold text-lg">
+                    <a href="https://instagram.com" target="_blank" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-heritage-gold hover:text-heritage-charcoal transition-all"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://facebook.com" target="_blank" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-heritage-gold hover:text-heritage-charcoal transition-all"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://youtube.com" target="_blank" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-heritage-gold hover:text-heritage-charcoal transition-all"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="https://tiktok.com" target="_blank" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-heritage-gold hover:text-heritage-charcoal transition-all"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+
+            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-heritage-cream/60 gap-4">
+                <p>&copy; <span id="year"></span> House of Heritage Agency. St. Vincent & the Grenadines. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-heritage-gold transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-heritage-gold transition-colors">Terms of Service</a>
+                    <a href="mailto:contact@houseofheritage.svg" class="hover:text-heritage-gold transition-colors">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Logic Scripts -->
+    <script>
+        // Set current year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Copy Handle to Clipboard Function
+        function copyHandle(handleText) {
+            // Use execCommand fallback to avoid iframe permission blocks
+            const tempInput = document.createElement('input');
+            tempInput.value = handleText;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            
+            try {
+                document.execCommand('copy');
+                showToast(`Copied ${handleText} to clipboard!`);
+            } catch (err) {
+                showToast('Unable to copy handle');
+            }
+            document.body.removeChild(tempInput);
+        }
+
+        // Native Share Web API Function
+        function shareAgency() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'House of Heritage',
+                    text: 'House of Heritage - Preserving our past, inspiring our future. St. Vincent & the Grenadines',
+                    url: window.location.href,
+                }).catch(() => {});
+            } else {
+                copyHandle('@houseofheritage784');
+            }
+        }
+
+        // Show Custom Toast Message
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Filter Archive Cards Function
+        function filterPosts(category) {
+            const cards = document.querySelectorAll('.post-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            // Update active button state
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-heritage-green', 'text-heritage-cream');
+                btn.classList.add('bg-heritage-cream', 'text-heritage-earth');
+            });
+            event.target.classList.remove('bg-heritage-cream', 'text-heritage-earth');
+            event.target.classList.add('bg-heritage-green', 'text-heritage-cream');
+
+            // Filter cards display
+            cards.forEach(card => {
+                if (category === 'all' || card.classList.contains(category)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Form Submit Handler
+        function handleSubscribe(e) {
+            e.preventDefault();
+            const emailInput = document.getElementById('newsletter-email');
+            if (emailInput.value) {
+                showToast('Thank you for subscribing to our archives!');
+                emailInput.value = '';
+            }
+        }
+    </script>
+</body>
+</html>
